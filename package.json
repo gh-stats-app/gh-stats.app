@@ -1,0 +1,19 @@
+{
+  "name": "gh-stats.app",
+  "private": true,
+  "scripts": {
+    "start": "next dev",
+    "build": "next build",
+    "export": "next export && next-image-export-optimizer"
+  },
+  "dependencies": {
+    "next": "12.1.5",
+    "next-image-export-optimizer": "^0.9.6",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "8.14.0",
+    "eslint-config-next": "12.1.5"
+  }
+}

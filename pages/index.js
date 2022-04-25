@@ -17,7 +17,7 @@ export default function Home() {
             </Box>
             <Grid>
                 {data.map(achievement => (
-                    <Grid.Col md={3}>
+                    <Grid.Col md={3} key={achievement.id}>
                         <Card key={achievement.id} shadow="sm" p="lg">
                             <Image src={`${API_URL}${achievement.image}`}
                                    style={{ padding: theme.spacing.sm }} alt={achievement.id}/>

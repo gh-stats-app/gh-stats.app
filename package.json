@@ -4,7 +4,6 @@
   "scripts": {
     "start": "next dev",
     "build": "next build",
-    "postbuild": "cp out/index.html out/404.html",
     "export": "next export"
   },
   "dependencies": {

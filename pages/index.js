@@ -1,7 +1,6 @@
 import { ActionIcon, Box, Container, createStyles, Image, List, Text, TextInput, Title } from '@mantine/core';
 import { IconArrowRight, IconSearch } from '@tabler/icons-react';
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/router";
 import { AchievementDefinitions } from "../components/AchievementDefinitions";
 import { openModal } from "@mantine/modals";
 import UserProfile from "../components/UserProfile";
@@ -52,7 +51,6 @@ const useStyles = createStyles((theme) => ({
 
 export default function Home() {
     const { classes } = useStyles();
-    const router = useRouter()
     const form = useForm({
         initialValues: { username: '' }
     });

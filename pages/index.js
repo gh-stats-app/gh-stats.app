@@ -1,22 +1,11 @@
-import {
-    ActionIcon,
-    Box,
-    Card,
-    Container,
-    createStyles,
-    Grid,
-    Image,
-    List,
-    LoadingOverlay,
-    Text,
-    TextInput,
-    Title
-} from '@mantine/core';
-import { useQuery } from 'react-query';
-import { achievements, API_URL } from '../utils/queries';
+import { ActionIcon, Box, Container, createStyles, Image, List, Text, TextInput, Title } from '@mantine/core';
 import { IconArrowRight, IconSearch } from '@tabler/icons-react';
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
+import { AchievementDefinitions } from "../components/AchievementDefinitions";
+import { openModal } from "@mantine/modals";
+import UserProfile from "../components/UserProfile";
+import { AchievementFeed } from "../components/AchievementFeed";
 
 const useStyles = createStyles((theme) => ({
     inner: {
@@ -61,16 +50,12 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-
 export default function Home() {
     const { classes } = useStyles();
     const router = useRouter()
-    const { isLoading, data } = useQuery('achievements', achievements);
     const form = useForm({
         initialValues: { username: '' }
     });
-    if (isLoading) return <LoadingOverlay visible/>
-
     return (
         <Container>
             <div className={classes.inner}>
@@ -95,7 +80,15 @@ export default function Home() {
                        className={classes.image}/>
             </div>
             <Box my={20}>
-                <form onSubmit={form.onSubmit((values) => router.push('/user/' + values.username))}>
+                <form onSubmit={form.onSubmit((values) => {
+                    openModal({
+                        title: `${values.username} unlocked achievements`,
+                        children: (
+                            <UserProfile id={values.username}/>
+                        ),
+                    });
+                    form.reset();
+                })}>
                     <TextInput
                         icon={<IconSearch size={18} stroke={1.5}/>}
                         radius="xl"
@@ -114,19 +107,11 @@ export default function Home() {
             <Title className={classes.title} style={{ fontSize: 36 }}>
                 Possible achievements:
             </Title>
-            <Grid>
-                {data.map(achievement => (
-                    <Grid.Col md={3} key={achievement.id}>
-                        <Card key={achievement.id} p="lg">
-                            <Image src={`${API_URL}${achievement.image}`}
-                                   sx={(theme) => ({ padding: theme.spacing.sm })} alt={achievement.id}/>
-                            <Text weight={500} align="center" sx={(theme) => ({
-                                marginBottom: 5, marginTop: theme.spacing.sm
-                            })}>{achievement.id}</Text>
-                        </Card>
-                    </Grid.Col>
-                ))}
-            </Grid>
+            <AchievementDefinitions/>
+            <Title className={classes.title} style={{ fontSize: 36 }}>
+                Recently unlocked
+            </Title>
+            <AchievementFeed/>
         </Container>
     )
 }

@@ -3,6 +3,7 @@ import { useColorScheme } from '@mantine/hooks';
 import Head from 'next/head'
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ModalsProvider } from "@mantine/modals";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,9 @@ export default function App({ Component, pageProps }) {
                              theme={{ colorScheme: 'light' }}
                              toggleColorScheme={toggleColorScheme}>
                 <QueryClientProvider client={queryClient}>
-                    <Component {...pageProps} />
+                    <ModalsProvider>
+                        <Component {...pageProps} />
+                    </ModalsProvider>
                 </QueryClientProvider>
             </MantineProvider>
         </>

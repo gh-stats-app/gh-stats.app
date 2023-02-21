@@ -1,13 +1,10 @@
-import { Avatar, Container, Group, LoadingOverlay, Stack, Text } from '@mantine/core';
 import { useQuery } from "react-query";
-import { feedToken } from "../../utils/queries";
-import { useRouter } from "next/router";
+import { userAchievements } from "../utils/queries";
+import { Avatar, Container, Group, LoadingOverlay, Stack, Text } from "@mantine/core";
 
-export default function UserProfile() {
-    const router = useRouter()
-    const { id } = router.query
-    const { data, isLoading } = useQuery(['feed', id], () => feedToken(id), { enabled: !!id })
-    if (isLoading || !id) return <LoadingOverlay visible/>;
+export default function UserProfile({ id }) {
+    const { data, isLoading } = useQuery(['feed', id], () => userAchievements(id))
+    if (isLoading) return <LoadingOverlay visible/>;
     return (
         <Container size="xl">
             <Stack>
